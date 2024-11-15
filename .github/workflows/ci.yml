@@ -3,26 +3,49 @@
    on: [push, pull_request]
 
    jobs:
-     test:
-       runs-on: ubuntu-latest
+      test-poetry:
+        runs-on: ubuntu-latest
 
-       strategy:
-         matrix:
-           tool: [poetry, uv]
+        steps:
+        - uses: actions/checkout@v2
 
-       steps:
-       - uses: actions/checkout@v2
+        - name: Set up Python
+          uses: actions/setup-python@v2
+          with:
+            python-version: '3.11'
 
-       - name: Set up Python
-         uses: actions/setup-python@v2
-         with:
-           python-version: '3.11'
+        - name: Copy pyproject
+          run: |
+              cp pyproject.poetry.toml pyproject.toml
 
-       - name: Install dependencies
-         run: |
-             pip install ${{ matrix.tool }}
-             ${{ matrix.tool }} install
+        - name: Install dependencies
+          run: |
+              pip install poetry
+              poetry install
 
-       - name: Run tests
-         run: |
-             ${{ matrix.tool }} run pytest
+        - name: Run tests
+          run: |
+              poetry run pytest
+      test-uv:
+        runs-on: ubuntu-latest
+
+        steps:
+        - uses: actions/checkout@v2
+
+        - name: Set up Python
+          uses: actions/setup-python@v2
+          with:
+            python-version: '3.11'
+
+        - name: Copy pyproject
+          run: |
+              cp pyproject.uv.toml pyproject.toml
+
+        - name: Install dependencies
+          run: |
+              pip install uv
+              uv sync
+
+        - name: Run tests
+          run: |
+              uv run python -m pytest

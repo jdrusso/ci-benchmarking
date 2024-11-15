@@ -1,0 +1,23 @@
+[project]
+name = "ci-benchmark-package-managers"
+version = "0.1.0"
+description = ""
+authors = [{name = "JD Russo", email = "jdrusso@users.noreply.github.com"}]
+readme = "README.md"
+packages = [
+    { include = "benchmark" }
+]
+
+requires-python = "<4.0,>=3.11"
+dependencies = [
+    "fastapi<1.0.0,>=0.115.5",
+    "pandas<3.0.0,>=2.2.3",
+]
+
+
+
+[dependency-groups]
+dev = [
+    "pytest<9.0.0,>=8.3.3",
+    "httpx<1.0.0,>=0.27.2"
+]
