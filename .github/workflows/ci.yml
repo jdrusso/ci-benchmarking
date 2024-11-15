@@ -49,3 +49,30 @@
         - name: Run tests
           run: |
               uv run python -m pytest
+      test-uv-with-setup:
+        runs-on: ubuntu-latest
+
+        steps:
+        - uses: actions/checkout@v2
+
+        - name: Set up Python
+          uses: actions/setup-python@v2
+          with:
+            python-version: '3.11'
+
+        - name: Copy pyproject
+          run: |
+              cp pyproject.uv.toml pyproject.toml
+          
+        - name: Install the latest version of uv
+          uses: astral-sh/setup-uv@v3
+          with:
+            version: "latest"
+
+        - name: Install dependencies
+          run: |
+              uv sync
+
+        - name: Run tests
+          run: |
+              uv run python -m pytest
