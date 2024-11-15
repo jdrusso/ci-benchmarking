@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "ci-benchmark-package-managers"
+version = "0.1.0"
+description = ""
+authors = ["JD Russo <jdrusso@users.noreply.github.com>"]
+readme = "README.md"
+packages = [
+    { include = "benchmark" }
+]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = {extras = ["httpx"], version = "^0.115.5"}
+pandas = "^2.2.3"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.3"
+httpx = "^0.27.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
