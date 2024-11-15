@@ -6,6 +6,10 @@
      test:
        runs-on: ubuntu-latest
 
+       strategy:
+         matrix:
+           tool: [poetry, uv]
+
        steps:
        - uses: actions/checkout@v2
 
@@ -16,9 +20,9 @@
 
        - name: Install dependencies
          run: |
-             pip install poetry
-             poetry install
+             pip install ${{ matrix.tool }}
+             ${{ matrix.tool }} install
 
        - name: Run tests
          run: |
-             poetry run pytest
+             ${{ matrix.tool }} run pytest
